@@ -5,10 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,7 +36,7 @@ public class newsAdapter extends ArrayAdapter<news_item> {
         authorView.setText(currentNewsitem.getType());
         TextView priceView = (TextView) listItemView.findViewById(R.id.date);
         priceView.setText(currentNewsitem.getDate());
-        TextView catView= (TextView) listItemView.findViewById(R.id.category);
+        TextView catView = (TextView) listItemView.findViewById(R.id.category);
         catView.setText(currentNewsitem.getCategory());
 
         // Return the list item view that is now showing the appropriate data

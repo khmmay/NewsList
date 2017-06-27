@@ -33,10 +33,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.text.TextUtils.concat;
-
 /**
- * Helper methods related to requesting and receiving newsItem data from USGS.
+ * Helper methods related to requesting and receiving newsItem data from Guardian API.
  */
 final class QueryUtils {
 
@@ -183,20 +181,15 @@ final class QueryUtils {
                 String webURL = currentNewsItem.getString("webUrl");
                 String section = currentNewsItem.getString("sectionName");
                 String type = currentNewsItem.getString("type");
-                if (section.equals("Opinion")){
+                if (section.equals("Opinion")) {
                     String[] parts = title.split(" \\| ");
-                    title=parts[0];
-                    type = type.concat(" by "+parts[1]);
+                    title = parts[0];
+                    type = type.concat(" by " + parts[1]);
                 }
 
                 String pubDate = currentNewsItem.getString("webPublicationDate");
-                pubDate=pubDate.substring(0, pubDate.length() - 10);
+                pubDate = pubDate.substring(0, pubDate.length() - 10);
 
-
-
-
-                // Create a new {@link newsItem} object with the magnitude, location, time,
-                // and url from the JSON response.
                 news_item newNewsitem = new news_item(title, type, section, pubDate, webURL);
 
                 newsitems.add(newNewsitem);

@@ -1,62 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.may.android.newslist.MainActivity">
-
-    <LinearLayout
-        android:id="@+id/ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/search_hight"
-            android:layout_weight="3"
-            android:text="@string/sample_search" />
-
-        <TextView
-            android:id="@+id/reload"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/search_hight"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Reload"
-            android:textSize="24sp" />
-    </LinearLayout>
-
-
-    <ListView
-        android:id="@+id/list"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:orientation="vertical" />
+        tools:context="com.may.android.newslist.MainActivity">
 
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAppearance="?android:textAppearanceMedium" />
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <ProgressBar
-        android:id="@+id/loading_indicator"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+            <EditText
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/search_hight"
+                android:layout_weight="3"
+                android:text="@string/sample_search" />
+
+            <TextView
+                android:id="@+id/reload"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/search_hight"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Reload"
+                android:textSize="24sp" />
+        </LinearLayout>
 
 
-</RelativeLayout>
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ll"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+        <ProgressBar
+            android:id="@+id/loading_indicator"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+
+    </RelativeLayout>
 </layout>

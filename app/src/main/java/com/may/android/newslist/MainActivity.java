@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.may.android.newslist.databinding.ActivityMainBinding;
@@ -24,10 +22,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<news_item>> {
 
-    private static final String LOG_TAG = MainActivity.class.getName();
-
     boolean searched = false;
     boolean queryChanged = false;
+
+    // Get a reference to the ConnectivityManager to check state of network connectivity
+    ConnectivityManager connMgr = null;
 
     private static final String REQUEST_URL_BASE =
             "http://content.guardianapis.com/search"/*+"?q=debate&tag=politics/politics&from-date=2014-01-01&api-key=test"*/;
@@ -103,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
 
+                assert currentNewsitem != null;
                 if (!(currentNewsitem.getLink() == null)) {
                     Uri newsItemUri = Uri.parse(currentNewsitem.getLink());
                     // Create a new intent to view the newsItem URI
@@ -114,10 +114,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-
+        connMgr=(ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         // Get details on the currently active default data network
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
@@ -152,8 +149,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         uriBuilder.appendQueryParameter("q", query);
         uriBuilder.appendQueryParameter("api-key", "test");
 
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        return new newsLoader(this, uriBuilder.toString());
+        newsLoader loader=null;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            loader=new newsLoader(this, uriBuilder.toString());
+        } else {
+            // Otherwise, display error
+            // First, hide loading indicator so error message will be visible
+            binding.loadingIndicator.setVisibility(View.GONE);
+
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet_connection);
+
+        }
+        return loader;
 
     }
 
