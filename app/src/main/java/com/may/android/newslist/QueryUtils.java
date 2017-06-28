@@ -184,7 +184,9 @@ final class QueryUtils {
                 if (section.equals("Opinion")) {
                     String[] parts = title.split(" \\| ");
                     title = parts[0];
-                    type = type.concat(" by " + parts[1]);
+                    if (parts.length>1){
+                        type = type.concat(" by " + parts[1]);
+                    }
                 }
 
                 String pubDate = currentNewsItem.getString("webPublicationDate");
