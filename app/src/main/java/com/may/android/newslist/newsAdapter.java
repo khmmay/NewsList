@@ -13,9 +13,9 @@ import java.util.List;
  * Created by Henrik on 22.06.2017.
  */
 
-public class newsAdapter extends ArrayAdapter<news_item> {
+public class NewsAdapter extends ArrayAdapter<NewsItem> {
 
-    public newsAdapter(Context context, List<news_item> newsitems) {
+    public NewsAdapter(Context context, List<NewsItem> newsitems) {
         super(context, 0, newsitems);
     }
 
@@ -28,7 +28,7 @@ public class newsAdapter extends ArrayAdapter<news_item> {
                     R.layout.news_list_item, parent, false);
         }
 
-        news_item currentNewsitem = getItem(position);
+        NewsItem currentNewsitem = getItem(position);
 
         TextView titleView = (TextView) listItemView.findViewById(R.id.title);
         titleView.setText(currentNewsitem.getTitle());

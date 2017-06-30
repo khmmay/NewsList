@@ -9,11 +9,11 @@ import java.util.List;
  * Created by Henrik on 22.06.2017.
  */
 
-public class newsLoader extends AsyncTaskLoader<List<news_item>> {
+public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
 
     private String mUrl;
 
-    public newsLoader(Context context, String url) {
+    public NewsLoader(Context context, String url) {
         super(context);
         mUrl = url;
     }
@@ -24,12 +24,12 @@ public class newsLoader extends AsyncTaskLoader<List<news_item>> {
     }
 
     @Override
-    public List<news_item> loadInBackground() {
+    public List<NewsItem> loadInBackground() {
         if (mUrl == null) {
             return null;
         }
         // Perform the network request, parse the response, and extract a list of newsItem.
-        List<news_item> newsitems = QueryUtils.fetchnewsItemData(mUrl);
+        List<NewsItem> newsitems = QueryUtils.fetchnewsItemData(mUrl);
         return newsitems;
     }
 }
