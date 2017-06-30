@@ -20,9 +20,9 @@ import com.may.android.newslist.databinding.ActivityMainBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<news_item>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>> {
 
-    boolean searched = false;
+    private boolean searched = false;
     boolean queryChanged = false;
 
     // Get a reference to the ConnectivityManager to check state of network connectivity
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * Adapter for the list of news_items
      */
-    private newsAdapter mAdapter;
+    private NewsAdapter mAdapter;
 
     /**
      * TextView that is displayed when the list is empty
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         binding.emptyView.setText("");
         binding.list.setEmptyView(mEmptyStateTextView);
 
-        mAdapter = new newsAdapter(getBaseContext(), new ArrayList<news_item>());
+        mAdapter = new NewsAdapter(getBaseContext(), new ArrayList<NewsItem>());
 
         binding.list.setAdapter(mAdapter);
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current newsItem that was clicked on
-                news_item currentNewsitem = mAdapter.getItem(position);
+                NewsItem currentNewsitem = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
 
@@ -109,7 +109,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsItemUri);
 
                     // Send the intent to launch a new activity
-                    startActivity(websiteIntent);
+                    if (websiteIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(websiteIntent);
+                    }
                 }
             }
         });
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<news_item>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<NewsItem>> onCreateLoader(int id, Bundle args) {
         Uri baseUri = Uri.parse(REQUEST_URL_BASE);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
@@ -152,9 +154,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Get details on the currently active default data network
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        newsLoader loader=null;
+        NewsLoader loader=null;
         if (networkInfo != null && networkInfo.isConnected()) {
-            loader=new newsLoader(this, uriBuilder.toString());
+            loader=new NewsLoader(this, uriBuilder.toString());
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
@@ -169,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoadFinished(Loader<List<news_item>> loader, List<news_item> data) {
+    public void onLoadFinished(Loader<List<NewsItem>> loader, List<NewsItem> data) {
         // Hide loading indicator because the data has been loaded
         binding.loadingIndicator.setVisibility(View.GONE);
 
@@ -178,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Clear the adapter of previous newsItem data
         mAdapter.clear();
 
-        // If there is a valid list of {@link news_item}s, then add them to the adapter's
+        // If there is a valid list of {@link NewsItem}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (data != null && !data.isEmpty()) {
             mAdapter.addAll(data);
@@ -186,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoaderReset(Loader<List<news_item>> loader) {
+    public void onLoaderReset(Loader<List<NewsItem>> loader) {
         mAdapter.clear();
     }
 

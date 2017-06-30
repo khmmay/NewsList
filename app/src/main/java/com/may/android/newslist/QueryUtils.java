@@ -52,9 +52,9 @@ final class QueryUtils {
     }
 
     /**
-     * Query the USGS dataset and return a list of {@link news_item} objects.
+     * Query the USGS dataset and return a list of {@link NewsItem} objects.
      */
-    static List<news_item> fetchnewsItemData(String requestUrl) {
+    static List<NewsItem> fetchnewsItemData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -148,16 +148,16 @@ final class QueryUtils {
     }
 
     /**
-     * Return a list of {@link news_item} objects that has been built up from
+     * Return a list of {@link NewsItem} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static List<news_item> extractFeatureFromJson(String newsItemJSON) {
+    private static List<NewsItem> extractFeatureFromJson(String newsItemJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(newsItemJSON)) {
             return null;
         }
 
-        List<news_item> newsitems = new ArrayList<>();
+        List<NewsItem> newsitems = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -192,7 +192,7 @@ final class QueryUtils {
                 String pubDate = currentNewsItem.getString("webPublicationDate");
                 pubDate = pubDate.substring(0, pubDate.length() - 10);
 
-                news_item newNewsitem = new news_item(title, type, section, pubDate, webURL);
+                NewsItem newNewsitem = new NewsItem(title, type, section, pubDate, webURL);
 
                 newsitems.add(newNewsitem);
             }
